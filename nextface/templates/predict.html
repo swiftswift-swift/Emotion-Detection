@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div>
+    <script src="../static/js/aframe.min.js"></script>
+    <script src="../static/js/aframe-ar.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    <div class="box1">
+        <h2 style="text-align: center;color:red">Input Image </h2>
+        <img src="{{ url_for('static', filename='3dfile.jpg') }}" alt="Italian Trulli" class="center1" height="350">
+        
+    </div>
+    <div class="box1">
+        <h2 style="text-align: center;color:blue">Face Rendering</h2>
+        <img src="{{ url_for('static', filename='output/render_0.png') }}" alt="Italian Trulli" class="center1" height="250"
+            width="1200">
+    </div>
+    <div class="box1">
+        <h2 style="text-align: center;">3D Model</h2>
+        <div id="model">
+            <model-viewer src="static/output/result.glTF" alt="A 3D model of a face" class="center1" auto-rotate="true"
+                camera-controls="true" shadow-intensity="1" ar="true"></model-viewer>
+        </div>
+        <a class="btn btn-danger center1" role="button" href="static/output/mesh0.obj" download="3d.obj">Download</a>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+        body {
+          margin: 0px;
+          padding: 0px;
+          font-family: "Courier Prime", monospace;
+          background-color: #fdfdfe;
+        }
+        header {
+          width: 100%;
+          justify-content: center;
+          align-items: top;
+          margin: 0;
+        }
+        
+        header h1 {
+          font-size: 50px;
+          font-weight: 500;
+          color: #553c9a;
+          border-right: 4px solid #000;
+          animation: cursor 1s infinite step-end, typing 15s infinite steps(24);
+          white-space: nowrap;
+          overflow: hidden;
+          
+        }
+        @keyframes cursor{
+          0%, 100%{border-color: transparent;}
+          50%{border-color: #000;}
+        }
+        
+        @keyframes typing{
+          0%{ width: 0ch} /*Text is hidden*/
+          30%{ width: 24ch;} /*The enitre header will be typed out*/
+          80%{ width: 24ch;} /*Text stays visible*/
+          90%{ width: 0ch;} /*Text is deleted*/
+          100%{ width: 0ch;} /*Text stays hidden*/
+        }
+        .img1{
+            display: block;
+            width: 350px;
+            height: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .boxb{
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            border: 3px dashed black;
+        }
+        .aud{
+            margin: auto;
+            width: 50%;
+            height: 80px;
+            width: 300px;
+        }
+        .recommend{
+          padding: 10px;
+          border: 3px dashed black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="boxb">
+        <header>
+        <h1>Speech Emotion Detection</h1></header>
+        <hr>
+        <h3>Audio File : </h3>    
+        <div class="aud">
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio1.wav') }}" type="audio/wav">Your browser doesnt support audio</source>
+        </audio>
+        </div>
+        <h2 style="color:red ;text-align: center;">Predicted Emotion : {{data}} </h2>
+        <img src="{{ url_for('static', filename=im)}}" class="img1">
+        <div class="recommend">
+          <h2 style="color:red ;text-align: center;">Recommendations : </h2>
+          <hr>
+          <pre style="font-size: medium;">{{inf}}</pre>
+          </div>
+    </div>
+</body>
+
+
+{% endblock body %}

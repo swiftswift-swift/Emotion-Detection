@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block body %}
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Courier Prime", monospace;
+  background-color: #fdfdfe;
+}
+header {
+  width: 100%;
+  justify-content: center;
+  align-items: top;
+  margin: 0;
+}
+
+header h1 {
+  font-size: 50px;
+  font-weight: 500;
+  color:red;
+  border-right: 4px solid #000;
+  animation: cursor 1s infinite step-end, typing 15s infinite steps(22);
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 30px;
+}
+@keyframes cursor{
+  0%, 100%{border-color: transparent;}
+  50%{border-color: #000;}
+}
+
+@keyframes typing{
+  0%{ width: 0ch} /*Text is hidden*/
+  30%{ width: 22ch;} /*The enitre header will be typed out*/
+  80%{ width: 22ch;} /*Text stays visible*/
+  90%{ width: 0ch;} /*Text is deleted*/
+  100%{ width: 0ch;} /*Text stays hidden*/
+}
+        .img1{
+            display: block;
+            width: 400px;
+            height: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .boxb{
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            border: 3px dashed black;
+        }
+        .recommend{
+          padding: 10px;
+          border: 3px dashed black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="boxb">
+        <header>
+        <h1>Text Emotion Detection</h1>
+        </header>
+        <hr>
+        <p><h2 style="color:darkblue">Input Sentence : <span style="color:slateblue">{{sent}}</span></h2></p>
+        <h2 style="color:orange ;text-align: center;">Predicted Emotion : {{data}} </h2>
+        <img src="{{ url_for('static', filename=outimg)}}" class="img1">
+        <div class="recommend">
+          <h2 style="color:red ;text-align: center;">Recommendations : </h2>
+          <hr>
+          <pre style="font-size: medium;">{{inf}}</pre>
+        </div>
+    </div>
+</body>
+
+
+{% endblock body %}

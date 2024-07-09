@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Courier Prime", monospace;
+  background-color: #fdfdfe;
+}
+header {
+  width: 100%;
+  justify-content: center;
+  align-items: top;
+  margin: 0;
+}
+
+header h1 {
+  font-size: 50px;
+  font-weight: 500;
+  color: #553c9a;
+  border-right: 4px solid #000;
+  animation: cursor 1s infinite step-end, typing 15s infinite steps(22);
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 350px;
+  
+}
+@keyframes cursor{
+  0%, 100%{border-color: transparent;}
+  50%{border-color: #000;}
+}
+
+@keyframes typing{
+  0%{ width: 0ch} /*Text is hidden*/
+  30%{ width: 22ch;} /*The enitre header will be typed out*/
+  80%{ width: 22ch;} /*Text stays visible*/
+  90%{ width: 0ch;} /*Text is deleted*/
+  100%{ width: 0ch;} /*Text stays hidden*/
+}
+.input{
+    padding: 10px;
+    margin: auto;
+    width: 50%;
+}
+    </style>
+</head> 
+
+<body>
+    <header>
+    <h1 style="text-align:center;">Text Emotion Detection</h1>
+    </header>
+    <hr>
+    <div class="input">
+    <form action="/textPred" method="post">
+        <h2>Please enter Text</h2>
+        <textarea cols="60" rows="14" placeholder="Enter Text...." id="input1" name="input1" minlength="6" required></textarea>
+        <br>
+        <br>
+        <button type="reset">Clear</button>
+        <input type="submit" value="Submit" name="submit">
+    </form>
+    </div>
+</body>
+
+{% endblock body %}

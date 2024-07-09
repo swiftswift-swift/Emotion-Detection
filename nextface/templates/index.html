@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% block body %}
+<script> 
+  const button = document.getElementById('run-button'); 
+  button.addEventListener('click', () => { 
+    fetch('/run-code', {method: 'POST'}) 
+        .then(response => response.text()) 
+        .then(text => console.log(text)); 
+  }); 
+
+  
+  </script>
+
+<style>
+    .float-container {
+      padding: 100px;
+    }
+    .float-child {
+      padding: 50px;
+      float: left;
+    }
+    .card {
+      
+      width: 100%;
+    }
+    .card-img-top {
+      border: 3px solid black;
+    }
+    .box {
+      width: 520px;
+      height: 580px;
+      background: lawngreen;
+      border: 3px solid black;
+      text-align: center;
+      padding: 30px;
+    }
+    .btn {
+      display: block;
+      width: 100px;
+      height: 40px;
+      background: darkmagenta;
+      color: #fff;
+      position: relative;
+      border-radius: 3px;
+      border: 0;
+      transition: all 0.3s ease-in-out;
+      font-size: 14px;
+    }
+    .btn:hover {
+      background: gold;
+      box-shadow: 0 3px 0 0 deeppink;
+    }
+    .btn1 {
+      left: 320px;
+      top: -40px;
+    }
+    .btn2 {
+      top: -5px;
+      left: 180px;
+    }
+  </style>
+
+<section id="hero">
+  <div class="hero container">
+    <div>
+      <h5>Welcome to <span></span></h5>
+      <h5>Multi Modal Emotion<span></span></h5>
+      <h5>A WebApp to detect emotions from image, text, audio and video <span></span></h5>
+      <a href="#carouselExampleIndicators" type="button" class="cta">Let's Start</a>
+    </div>
+  </div>
+</section>
+
+<div class="container-fluid">
+  <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" data-interval="1000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="{{ url_for('static', filename='home1.webp') }}" alt="First slide" width=auto
+          height="400">
+        <h4 style="color:black;text-align: center;">Valid Emotions</h4>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{{ url_for('static', filename='home2.jpeg') }}" alt="Second slide" width=auto
+          height="400">
+        <h4 style="color:black; text-align: center;">Emotion Detection</h4>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="{{ url_for('static', filename='mmed.png') }}" alt="Third slide" width=auto
+          height="400">
+        <h4 style="color:black; text-align: center;">Valid Inputs</h4>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+<!-- <div class="container">
+<div class="box">
+  <div class="frame">
+    <div class="center">
+      <div class="title">
+        <h1>Drop file to upload</h1>
+      </div>
+      <div class="dropzone">
+          <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+          <form method="POST" enctype="multipart/form-data" action="{{url_for('uploadFile')}}">
+            <input type="file" class="upload" id="myFile" name="uploaded-file" >
+            <input type="submit" class="btn submit" value="Submit">
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+
+<div class="float-container">
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='img.gif') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">Image Emotion</h2>
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{url_for('uploadFile')}}"
+          >
+            <input
+              type="file"
+              class="upload"
+              id="myFile"
+              name="uploaded-file"
+            />
+            <input type="submit" class="btn btn1 submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='camera.gif') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">Real Time Video Emotion</h2>
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{url_for('run_code')}}"
+          >
+            <input type="submit" class="btn btn2 submit" id="run-button" value="Run" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="float-container">
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='sppech.webp') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">Speech Emotion</h2>
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{url_for('speechEmo')}}"
+          >
+            <input
+              type="file"
+              class="upload"
+              id="myFile"
+              name="uploaded-audio"
+            />
+            <input type="submit" class="btn btn1 submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='text.webp') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">Text Emotion</h2>
+          <form
+            action="{{url_for('textEmo')}}"
+          >
+            <input type="submit" class="btn btn2 submit" value="Run" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="float-container">
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='list.gif') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">Real Time Speech Emotion</h2>
+          <form
+            action="{{url_for('aud1')}}"
+          >
+            <input type="submit" class="btn btn2 submit" value="Start" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="float-child">
+    <div class="box">
+      <div class="card">
+        <div class="view overlay">
+          <img
+            class="card-img-top"
+            src="{{ url_for('static', filename='3d.gif') }}"
+            alt="Card image cap"
+            width="450"
+            height="400"
+          />
+          <h2 class="card-title">3D Model</h2>
+          <form
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{url_for('predict')}}"
+          >
+            <input
+              type="file"
+              class="upload"
+              id="myFile"
+              name="upload-3dfile"
+            />
+            <input type="submit" class="btn btn1 submit" value="Run" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+{% endblock body %}

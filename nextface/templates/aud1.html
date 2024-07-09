@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+body {
+margin: 0px;
+padding: 0px;
+font-family: "Courier Prime", monospace;
+background-color: #fdfdfe;
+}
+header {
+width: 100%;
+justify-content: center;
+align-items: top;
+margin: 0;
+}
+
+header h1 {
+font-size: 50px;
+font-weight: 500;
+color: #553c9a;
+border-right: 4px solid #000;
+animation: cursor 1s infinite step-end, typing 15s infinite steps(15);
+white-space: nowrap;
+overflow: hidden;
+margin-left: 450px;
+}
+@keyframes cursor{
+0%, 100%{border-color: transparent;}
+50%{border-color: #000;}
+}
+
+@keyframes typing{
+0%{ width: 0ch} /*Text is hidden*/
+30%{ width: 15ch;} /*The enitre header will be typed out*/
+80%{ width: 15ch;} /*Text stays visible*/
+90%{ width: 0ch;} /*Text is deleted*/
+100%{ width: 0ch;} /*Text stays hidden*/
+}
+.input{
+  padding: 10px;
+  margin: auto;
+  width: 50%;
+}
+.btn {
+  display: block;
+  width: 100px;
+  height: 40px;
+  background: darkmagenta;
+  color: #fff;
+  position: relative;
+  border-radius: 3px;
+  border: 0;
+  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+}
+.btn1:hover {
+  background: green;
+  box-shadow: 0 3px 0 0 greenyellow;
+}
+
+.btn1{
+  left: 50px;
+}
+
+.btn2{
+  top: -65px;
+  left: 350px;
+}
+
+.btn2:hover {
+  background: red;
+  box-shadow: 0 3px 0 0 black;
+}
+.btn3{
+  left: 260px;
+}
+.btn3:hover {
+  background: cornflowerblue;
+  box-shadow: 0 3px 0 0 blue;
+}
+
+.btn4{
+  left: 400px;
+  top: -63px;
+}
+.aud{
+  margin-left: 100px;
+}
+  </style>
+</head>
+
+<body>
+    <header>
+      <h1 style="text-align:center;">Audio Recorder</h1>
+      </header>
+      <hr>
+    
+    <div class="input">
+      <div>
+        <h5>
+          Click on "Record" button to Start recording and "Stop" button to Stop recording
+        </h5>
+        <br>
+      <button id="record-btn" class="btn btn1" onclick="startRecording()">Record</button>
+      <br>
+      <button id="stop-btn" class="btn btn2" onclick="stopRecording()">Stop</button>
+      
+    </div>
+    <div>
+      <h5>Recorded Audio :</h5>
+      <br>
+      <audio id="audio-player" class="aud" controls></audio>
+      <br>
+    </div>
+    <div>
+      <br>
+      <button id="send-btn" class="btn btn3" onclick="sendAudio()">Save Audio</button>
+      <br>
+      <form action="./RealTimeSpeech">
+        <button id="send" class="btn btn4">Submit</button>
+      </form>
+    </div>
+    </div>
+
+    <script>
+      let mediaRecorder;
+      let audioChunks = [];
+
+      const startRecording = () => {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then((stream) => {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.addEventListener("dataavailable", (event) => {
+              audioChunks.push(event.data);
+            });
+            mediaRecorder.addEventListener("stop", () => {
+              const audioBlob = new Blob(audioChunks);
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+              const audioPlayer = document.getElementById("audio-player");
+              audioPlayer.src = audioUrl;
+              audioPlayer.play();
+            });
+            mediaRecorder.start();
+          })
+          .catch((error) => {
+            console.error("Error: ", error);
+          });
+      };
+
+      const stopRecording = () => {
+        mediaRecorder.stop();
+      };
+
+      const sendAudio = () => {
+        const audioBlob = new Blob(audioChunks);
+        const formData = new FormData();
+        formData.append("audio", audioBlob);
+
+        fetch("/upload-audio", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            console.log("Response: ", response);
+          })
+          .catch((error) => {
+            console.error("Error: ", error);
+          });
+      };
+    </script>
+</body>
+
+{% endblock body %}
